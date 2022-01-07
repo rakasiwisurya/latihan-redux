@@ -1,17 +1,26 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getListKontak } from "../../actions/kontakAction";
+import { getListKontak, deleteKontak } from "../../actions/kontakAction";
 
 export default function ListKontak() {
-  const { getListKontakResult, getListKontakLoading, getListKontakError } =
-    useSelector((state) => state.KontakReducer);
+  const {
+    getListKontakResult,
+    getListKontakLoading,
+    getListKontakError,
+    deleteKontakResult,
+  } = useSelector((state) => state.KontakReducer);
   const dispatch = useDispatch();
 
   useEffect(() => {
     // call action getListKontak
-    console.log("1. use effect component did mount");
     dispatch(getListKontak());
   }, [dispatch]);
+
+  useEffect(() => {
+    if (deleteKontakResult) {
+      dispatch(getListKontak());
+    }
+  }, [deleteKontakResult, dispatch]);
 
   return (
     <div>
@@ -20,7 +29,10 @@ export default function ListKontak() {
         getListKontakResult.map((kontak) => {
           return (
             <p key={kontak.id}>
-              {kontak.nama} - {kontak.nohp}
+              {kontak.nama} - {kontak.nohp} -{" "}
+              <button onClick={() => dispatch(deleteKontak(kontak.id))}>
+                Hapus
+              </button>
             </p>
           );
         })

@@ -7,20 +7,17 @@ export default function AddKontak() {
   const [nohp, setNohp] = useState("");
 
   const { addKontakResult } = useSelector((state) => {
-    console.log(state.KontakReducer);
     return state.KontakReducer;
   });
   const dispatch = useDispatch();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("1. Masuk handle submit");
     dispatch(addKontak({ nama, nohp }));
   };
 
   useEffect(() => {
     if (addKontakResult) {
-      console.log("5. masuk component did update");
       dispatch(getListKontak());
       setNama("");
       setNohp("");
