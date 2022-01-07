@@ -9,7 +9,7 @@ const initialState = {
 const kontak = (state = initialState, action) => {
   switch (action.type) {
     case GET_LIST_KONTAK:
-      console.log("4. Masuk Reducer");
+      console.log("4. Masuk Reducer", action);
       return {
         ...state,
         getListKontakResult: action.payload.data,
