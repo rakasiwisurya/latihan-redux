@@ -1,6 +1,10 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getListKontak, deleteKontak } from "../../actions/kontakAction";
+import {
+  getListKontak,
+  deleteKontak,
+  detailKontak,
+} from "../../actions/kontakAction";
 
 export default function ListKontak() {
   const {
@@ -12,7 +16,6 @@ export default function ListKontak() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    // call action getListKontak
     dispatch(getListKontak());
   }, [dispatch]);
 
@@ -30,6 +33,9 @@ export default function ListKontak() {
           return (
             <p key={kontak.id}>
               {kontak.nama} - {kontak.nohp} -{" "}
+              <button onClick={() => dispatch(detailKontak(kontak))}>
+                Edit
+              </button>{" "}
               <button onClick={() => dispatch(deleteKontak(kontak.id))}>
                 Hapus
               </button>

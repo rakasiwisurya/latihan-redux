@@ -3,12 +3,14 @@ import axios from "axios";
 export const GET_LIST_KONTAK = "GET_LIST_KONTAK";
 export const ADD_KONTAK = "ADD_KONTAK";
 export const DELETE_KONTAK = "DELETE_KONTAK";
+export const DETAIL_KONTAK = "DETAIL_KONTAK";
+export const UPDATE_KONTAK = "UPDATE_KONTAK";
 
 export const getListKontak = () => {
   return (dispatch) => {
     // loading
     dispatch({
-      type: "GET_LIST_KONTAK",
+      type: GET_LIST_KONTAK,
       payload: {
         loading: true,
         data: false,
@@ -25,7 +27,7 @@ export const getListKontak = () => {
       .then((response) => {
         // success get API
         dispatch({
-          type: "GET_LIST_KONTAK",
+          type: GET_LIST_KONTAK,
           payload: {
             loading: false,
             data: response.data,
@@ -36,7 +38,7 @@ export const getListKontak = () => {
       .catch((error) => {
         // failed get API
         dispatch({
-          type: "GET_LIST_KONTAK",
+          type: GET_LIST_KONTAK,
           payload: {
             loading: false,
             data: false,
@@ -51,7 +53,7 @@ export const addKontak = (data) => {
   return (dispatch) => {
     // loading
     dispatch({
-      type: "ADD_KONTAK",
+      type: ADD_KONTAK,
       payload: {
         loading: true,
         data: false,
@@ -69,7 +71,7 @@ export const addKontak = (data) => {
       .then((response) => {
         // success get API
         dispatch({
-          type: "ADD_KONTAK",
+          type: ADD_KONTAK,
           payload: {
             loading: false,
             data: response.data,
@@ -80,7 +82,7 @@ export const addKontak = (data) => {
       .catch((error) => {
         // failed get API
         dispatch({
-          type: "ADD_KONTAK",
+          type: ADD_KONTAK,
           payload: {
             loading: false,
             data: false,
@@ -95,7 +97,7 @@ export const deleteKontak = (id) => {
   return (dispatch) => {
     // loading
     dispatch({
-      type: "DELETE_KONTAK",
+      type: DELETE_KONTAK,
       payload: {
         loading: true,
         data: false,
@@ -112,7 +114,7 @@ export const deleteKontak = (id) => {
       .then((response) => {
         // success get API
         dispatch({
-          type: "DELETE_KONTAK",
+          type: DELETE_KONTAK,
           payload: {
             loading: false,
             data: response.data,
@@ -123,7 +125,62 @@ export const deleteKontak = (id) => {
       .catch((error) => {
         // failed get API
         dispatch({
-          type: "DELETE_KONTAK",
+          type: DELETE_KONTAK,
+          payload: {
+            loading: false,
+            data: false,
+            errorMessage: error.message,
+          },
+        });
+      });
+  };
+};
+
+export const detailKontak = (data) => {
+  return (dispatch) => {
+    dispatch({
+      type: DETAIL_KONTAK,
+      payload: {
+        data,
+      },
+    });
+  };
+};
+
+export const updateKontak = (data) => {
+  return (dispatch) => {
+    // loading
+    dispatch({
+      type: UPDATE_KONTAK,
+      payload: {
+        loading: true,
+        data: false,
+        errorMessage: false,
+      },
+    });
+
+    // getAPI
+    axios({
+      method: "PUT",
+      url: "http://localhost:3004/kontaks/" + data.id,
+      timeout: 120000,
+      data,
+    })
+      .then((response) => {
+        // success get API
+        dispatch({
+          type: UPDATE_KONTAK,
+          payload: {
+            loading: false,
+            data: response.data,
+            errorMessage: false,
+          },
+        });
+      })
+      .catch((error) => {
+        // failed get API
+        dispatch({
+          type: UPDATE_KONTAK,
           payload: {
             loading: false,
             data: false,
